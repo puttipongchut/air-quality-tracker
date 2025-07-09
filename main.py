@@ -20,7 +20,25 @@ TARGET_PARAMETER = "pm25"
 DAYS_TO_FETCH = 7
 
 def get_air_quality_data():
-    print('test')
+    if not OPENAQ_API_KEY:
+        print("Error: OPENAQ_API_KEY not found in .env file.")
+        return
+
+    # Fetch Data
+    try:
+        url = f"{BASE_URL}/locations?coordinates={COORDINATES}&radius={RADIUS}"
+        headers = { "X-API-KEY": OPENAQ_API_KEY }
+        response = requests.get(url, headers=headers)
+        response.raise_for_status()
+        response_data = response.json()
+
+        # Filter the JSON
+        raw_measurements = response_data.get('results', [])
+        print(raw_measurements)
+        
+    except requests.exceptions.RequestException as e:
+            print(f"Error fetching measurements: {e}")
+            return
 
 if __name__ == "__main__":
     get_air_quality_data()
