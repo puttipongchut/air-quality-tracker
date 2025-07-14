@@ -130,7 +130,7 @@ def plot_graph(df):
     param_name = df['parameter_name'].iloc[0] if not df.empty and 'parameter_name' in df.columns else "Unknown Parameter"
     unit_name = df['unit'].iloc[0] if not df.empty and 'unit' in df.columns else ""
 
-    plt.figure(figsize=(12, 6))
+    plt.figure(figsize=(16, 6))
     sns.lineplot(data=df, x='date', y='value', hue='sensor_id', marker='o')
     plt.title(f'Daily {param_name} Levels in {TARGET_CITY} by Sensor ({unit_name})')
     plt.xlabel('Date')
